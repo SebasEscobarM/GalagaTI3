@@ -21,7 +21,7 @@ public class Bullet {
 	
 	public Bullet(double x, double y, boolean up, Canvas canvas) {
 		this.canvas=canvas;
-		this.gc=canvas.getGraphicsContext2D();
+		this.gc=this.canvas.getGraphicsContext2D();
 		this.up=up;
 		if(up) {
 			File file=new File("src/images/laserBullet.png");
@@ -32,6 +32,15 @@ public class Bullet {
 			}
 			this.x=x-(img.getWidth()/2);
 			this.y=y-(img.getHeight());
+		}else {
+			File file=new File("src/images/laserBulletDown.png");
+			try {
+				img=new Image(new FileInputStream(file));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			this.x=x-(img.getWidth()/2);
+			this.y=y;
 		}
 	}
 	

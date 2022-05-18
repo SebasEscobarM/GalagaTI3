@@ -27,7 +27,7 @@ public class MainWindow implements Initializable{
     
     private ArrayList<BaseScreen> screens;
     
-    private int actScreen;
+    public static int actScreen;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -56,6 +56,8 @@ public class MainWindow implements Initializable{
 		actScreen=1;
 		startBTN.setDisable(true);
 		startBTN.setVisible(false);
+		GameScreen gs=(GameScreen) screens.get(actScreen);
+		gs.play();
     }
 	
 	private void initEvent() {
@@ -71,6 +73,10 @@ public class MainWindow implements Initializable{
 	}
 
 	public void paint() {
+		if(!startBTN.isVisible() && actScreen==0) {
+			startBTN.setVisible(true);
+			startBTN.setDisable(false);
+		}
 		screens.get(actScreen).paint();
 	}
 	

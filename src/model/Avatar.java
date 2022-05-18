@@ -13,8 +13,8 @@ import javafx.scene.shape.Rectangle;
 public class Avatar {
 	private Canvas canvas;
 	private GraphicsContext gc;
-	private double x=250;
-	private double y=250;
+	private double x=0;
+	private double y=0;
 	private Image img;
 	private boolean UP=false;
 	private boolean DOWN=false;
@@ -36,6 +36,17 @@ public class Avatar {
 		}
 	}
 	
+	public void stop() {
+		UP=false;
+		DOWN=false;
+		RIGHT=false;
+		LEFT=false;
+	}
+	
+	public void iniPos(double d, double e) {
+		this.x=d-(img.getWidth()/2);
+		this.y=e-img.getHeight();
+	}
 	public void shot() {
 		bllts.add(new Bullet(x+(img.getWidth()/2),y,true,canvas));
 	}
@@ -69,14 +80,8 @@ public class Avatar {
 		gc.drawImage(img, x, y);
 	}
 	
-	public boolean verifyShot(Rectangle en) {
-		for(Bullet b:bllts) {
-			if(b.getRectangle().getBoundsInLocal().intersects(en.getBoundsInLocal())) {
-				bllts.remove(b);
-				return true;
-			}
-		}
-		return false;
+	public Rectangle getRectangle() {
+		return new Rectangle(x, y, img.getWidth(), img.getHeight());
 	}
 	
 	public void setSpeed(int speed) {
@@ -115,5 +120,9 @@ public class Avatar {
 	
 	public void setLEFT(boolean lEFT) {
 		LEFT = lEFT;
+	}
+	
+	public ArrayList<Bullet> getBllts(){
+		return bllts;
 	}
 }
