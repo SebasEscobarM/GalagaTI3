@@ -9,24 +9,34 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import screens.GameScreen;
 
-public class Avatar {
+public class Avatar{
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private double x=0;
 	private double y=0;
 	private Image img;
+	private Image img2;
 	private boolean UP=false;
 	private boolean DOWN=false;
 	private boolean RIGHT=false;
 	private boolean LEFT=false;
 	private int speed=2;
 	private ArrayList<Bullet> bllts;
+	private boolean timeShot = true;
 
 	public Avatar(Canvas canvas) {
 		this.canvas=canvas;
 		gc=canvas.getGraphicsContext2D();
 		bllts=new ArrayList<>();
+		
+		File file2=new File("src/images/boostShipPlayer.png");
+		try {
+			img2=new Image(new FileInputStream(file2));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 		File file=new File("src/images/shipPlayer.png");
 		try {
@@ -48,7 +58,11 @@ public class Avatar {
 		this.y=e-img.getHeight();
 	}
 	public void shot() {
-		bllts.add(new Bullet(x+(img.getWidth()/2),y,true,canvas));
+		if(timeShot) {
+			bllts.add(new Bullet(x+(img.getWidth()/2),y,true,canvas));
+			timeShot=false;
+			(new ThreadBullet(this)).start();
+		}
 	}
 	
 	public void paint() {
@@ -77,7 +91,20 @@ public class Avatar {
 				bllts.removeAll(toDel);
 			}
 		}
-		gc.drawImage(img, x, y);
+		if(speed == 5) {
+			setState(true);
+		}else {
+			setState(false);
+		}
+	}
+	
+	public void setState(boolean state) {
+		if(state == false) {
+			gc.drawImage(img, x, y);
+		}
+		if(state == true) {
+			gc.drawImage(img2, x, y);
+		}
 	}
 	
 	public Rectangle getRectangle() {
@@ -87,7 +114,7 @@ public class Avatar {
 	public void setSpeed(int speed) {
 		this.speed=speed;
 	}
-	
+
 	public void moveY(int i) {
 		y+=i;
 		if(y<=0) {
@@ -125,4 +152,15 @@ public class Avatar {
 	public ArrayList<Bullet> getBllts(){
 		return bllts;
 	}
+
+	public boolean isTimeShot() {
+		return timeShot;
+	}
+
+	public void setTimeShot(boolean timeShot) {
+		this.timeShot = timeShot;
+	}
+	
+	
+	
 }

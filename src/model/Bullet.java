@@ -17,7 +17,7 @@ public class Bullet {
 	private double y;
 	private Image img;
 	private boolean up;
-	private int speed=2;
+	private int speed=4;
 	
 	public Bullet(double x, double y, boolean up, Canvas canvas) {
 		this.canvas=canvas;

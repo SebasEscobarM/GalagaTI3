@@ -11,7 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
-public class Enemy extends Thread{
+public class Boss extends Thread{
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private double x=48;
@@ -21,27 +21,23 @@ public class Enemy extends Thread{
 	private boolean life=true;
 	private ArrayList<Bullet> bllts;
 
-	public Enemy(Canvas canvas) {
+	public Boss(Canvas canvas) {
 		this.canvas=canvas;
 		this.gc=this.canvas.getGraphicsContext2D();
 	}
 	
-	public Enemy(Canvas canvas, int x, int y) {
+	public Boss(Canvas canvas, int x, int y) {
 		this.canvas=canvas;
 		this.gc=this.canvas.getGraphicsContext2D();
 		this.x=x;
 		this.y=y;
 		bllts=new ArrayList<>();
-		File file=new File("src/images/enemy.png");
+		File file=new File("src/images/finalBoss.png");
 		try {
 			img=new Image(new FileInputStream(file));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void resetPrmtrs() {
-		
 	}
 	
 	public void paint() {
@@ -127,4 +123,5 @@ public class Enemy extends Thread{
 			e1.printStackTrace();
 		}
 	}
+	
 }

@@ -13,6 +13,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import screens.BaseScreen;
 import screens.GameScreen;
+import screens.LevelScreen;
+import screens.ScoreScreen;
 import screens.StartScreen;
 
 public class MainWindow implements Initializable{
@@ -25,15 +27,21 @@ public class MainWindow implements Initializable{
     
     private GraphicsContext gc;
     
-    private ArrayList<BaseScreen> screens;
+    public static ArrayList<BaseScreen> screens;
     
     public static int actScreen;
+    
+    public static int score = 0;
+    
+    public static int levelActual = 1;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		screens=new ArrayList<>();
 		screens.add(new StartScreen(canvas));
 		screens.add(new GameScreen(canvas));
+		screens.add(new ScoreScreen(canvas));
+		screens.add(new LevelScreen(canvas));
 		actScreen=0;		
 		
 		gc=canvas.getGraphicsContext2D();
@@ -53,11 +61,11 @@ public class MainWindow implements Initializable{
 	
 	@FXML
     public void startGame(ActionEvent event) {
-		actScreen=1;
+		actScreen=3;
 		startBTN.setDisable(true);
 		startBTN.setVisible(false);
-		GameScreen gs=(GameScreen) screens.get(actScreen);
-		gs.play();
+		LevelScreen ls=(LevelScreen) screens.get(actScreen);
+		ls.paint();
     }
 	
 	private void initEvent() {
