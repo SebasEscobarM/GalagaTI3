@@ -1,13 +1,19 @@
 package screens;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import controller.MainWindow;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import main.Main;
 import model.Avatar;
 import model.Boss;
@@ -22,12 +28,20 @@ public class GameScreen extends BaseScreen{
 	
 	private ArrayList<Boss> boss;
 	
-	private int sizeEnemies = 0;
-	
 	private int enemy = 0;
+	
+	private Image img2;
 	
 	public GameScreen(Canvas canvas) {
 		super(canvas);
+	
+		File file2=new File("src/images/galaxyRetroGame.png");
+		try {
+			img2=new Image(new FileInputStream(file2));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	
 		avatar=new Avatar(canvas);
 		enemies=new ArrayList<>();
 		boss=new ArrayList<>();
@@ -40,7 +54,7 @@ public class GameScreen extends BaseScreen{
 			enemy = 6;
 		}
 		avatar.stop();
-		avatar.iniPos(canvas.getWidth()/2, canvas.getHeight()-48);
+		avatar.iniPos(canvas.getWidth()/2, canvas.getHeight()-188);
 		int x=48, y=48;
 		if(MainWindow.levelActual != 3) {
 			for (int i = 0; i < 4; i++) {
@@ -54,7 +68,7 @@ public class GameScreen extends BaseScreen{
 			}
 		}else {
 			x=0;
-			boss.add(new Boss(canvas, x+160, y));
+			enemies.add(new Enemy(canvas, x+160, y));
 		}
 		
 		if(MainWindow.levelActual == 3) {
@@ -91,6 +105,8 @@ public class GameScreen extends BaseScreen{
 		}else if(MainWindow.levelActual == 3) {
 			if(finish == true) {
 				MainWindow.actScreen=2;
+			}else {
+				MainWindow.actScreen=2;
 			}
 			
 		}
@@ -98,9 +114,8 @@ public class GameScreen extends BaseScreen{
 
 	@Override
 	public void paint() {
-		gc.setFill(Color.BLACK);
-		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-				
+		gc.drawImage(img2, 0, 0);
+		
 		avatar.paint();
 		for(Enemy en:enemies) {
 			en.paint();
@@ -159,6 +174,11 @@ public class GameScreen extends BaseScreen{
 				break;
 			}
 		}
+		
+		gc.setFill(Color.WHITE);
+		//gc.setTextAlign(TextAlignment.LEFT);
+		gc.setFont(new Font(22));
+		gc.fillText("SCORE: "+MainWindow.score, 70, 700);
 		
 	}
 	

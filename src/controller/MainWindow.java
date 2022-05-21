@@ -31,7 +31,7 @@ public class MainWindow implements Initializable{
     
     public static int actScreen;
     
-    public static int score = 0;
+    public static int score;
     
     public static int levelActual = 1;
 
@@ -61,6 +61,7 @@ public class MainWindow implements Initializable{
 	
 	@FXML
     public void startGame(ActionEvent event) {
+		score = 0;
 		actScreen=3;
 		startBTN.setDisable(true);
 		startBTN.setVisible(false);

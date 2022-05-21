@@ -15,7 +15,7 @@ public class Boss extends Thread{
 	private Canvas canvas;
 	private GraphicsContext gc;
 	private double x=48;
-	private double y=48;
+	private double y=70;
 	private Image img;
 	private double speed=2;
 	private boolean life=true;
@@ -72,32 +72,32 @@ public class Boss extends Thread{
 		pause(1000);
 		int sht=0;
 		while(life) {
-			sht=rnd.nextInt(100 + 1) + 1;
+			sht=rnd.nextInt(200 + 1) + 1;
 			for(int i=0;i<10;i++) {
 				x+=speed;
 			}
-			if(sht>=1 && sht<=19) {
+			if(sht>=1 && sht<=49) {
 				shot();
 			}
 			pause(500);
 			for(int i=0;i<10;i++) {
 				y+=speed;
 			}
-			if(sht>=20 && sht<=39) {
+			if(sht>=50 && sht<=99) {
 				shot();
 			}
 			pause(500);
 			for(int i=0;i<10;i++) {
 				x-=speed;
 			}
-			if(sht>=40 && sht<=59) {
+			if(sht>=100 && sht<=149) {
 				shot();
 			}
 			pause(500);
 			for(int i=0;i<10;i++) {
 				y+=speed;
 			}
-			if(sht>60 && sht<=79) {
+			if(sht>150 && sht<=200) {
 				shot();
 			}
 			pause(500);

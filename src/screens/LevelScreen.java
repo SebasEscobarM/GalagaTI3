@@ -16,14 +16,50 @@ import javafx.scene.text.TextAlignment;
 
 public class LevelScreen extends BaseScreen{
 	
-	private Image img2;
+//	private Image img;
+	
+	private Image imgLevelOne;
+	
+	private Image imgLevelTwo;
+	
+	private Image imgLevelThree;
+	
+	private Image imgBossLevel;
 
 	public LevelScreen(Canvas canvas) {
 		super(canvas);
 		
-		File file2=new File("src/images/galaxyRetro.jpg");
+//		File file=new File("src/images/galaxyRetroMenuLevel.png");
+//		try {
+//			img=new Image(new FileInputStream(file));
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+		
+		File file2=new File("src/images/levelOneGameRetro.png");
 		try {
-			img2=new Image(new FileInputStream(file2));
+			imgLevelOne=new Image(new FileInputStream(file2));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		File file3=new File("src/images/levelTwoGameRetro.png");
+		try {
+			imgLevelTwo=new Image(new FileInputStream(file3));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		File file4=new File("src/images/levelThreeGameRetro.png");
+		try {
+			imgLevelThree =new Image(new FileInputStream(file4));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		File file5=new File("src/images/bossLevelRetroGame.png");
+		try {
+			imgBossLevel =new Image(new FileInputStream(file5));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -31,24 +67,46 @@ public class LevelScreen extends BaseScreen{
 
 	@Override
 	public void paint() {
-		gc.drawImage(img2, 0, 0);
+		gc.setFill(Color.BLACK);
+		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		
-		gc.setFill(Color.WHITE);
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setFont(new Font(50));
-		gc.fillText("Level "+ MainWindow.levelActual, canvas.getWidth()/2, canvas.getHeight()-570);
+//		gc.setFill(Color.WHITE);
+////		gc.setTextAlign(TextAlignment.CENTER);
+////		gc.setFont(new Font(50));
+////		gc.fillText("Level "+ MainWindow.levelActual, canvas.getWidth()/2, canvas.getHeight()-570);
 		
-		if(MainWindow.levelActual == 3) {
-			gc.setFill(Color.WHITE);
-			gc.setTextAlign(TextAlignment.CENTER);
-			gc.setFont(new Font(55));
-			gc.fillText("Final boss", canvas.getWidth()/2, canvas.getHeight()-650);
+		if(MainWindow.levelActual == 1) {
+			
+			gc.drawImage(imgLevelOne, canvas.getWidth()-400, canvas.getHeight()-650);
+			
+		}else if(MainWindow.levelActual == 2){
+			
+			gc.drawImage(imgLevelTwo, canvas.getWidth()-400, canvas.getHeight()-650);
+			
+		}else if(MainWindow.levelActual == 3) {
+			
+			gc.drawImage(imgLevelThree, canvas.getWidth()-400, canvas.getHeight()-700);
+			gc.drawImage(imgBossLevel, canvas.getWidth()-460, canvas.getHeight()-530);
+			
+//			gc.setFill(Color.WHITE);
+//			gc.setTextAlign(TextAlignment.CENTER);
+//			gc.setFont(new Font(55));
+//			gc.fillText("Final boss", canvas.getWidth()/2, canvas.getHeight()-650);
+			
 		}
 		
-		gc.setFill(Color.WHITE);
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setFont(new Font(20));
-		gc.fillText("Press ENTER to continue.", canvas.getWidth() / 2, canvas.getHeight() - 400);
+		if(MainWindow.levelActual != 3) {
+			gc.setFill(Color.WHITE);
+			gc.setTextAlign(TextAlignment.CENTER);
+			gc.setFont(new Font(20));
+			gc.fillText("Press ENTER to continue.", canvas.getWidth() / 2, canvas.getHeight() - 400);
+		}else {
+			gc.setFill(Color.WHITE);
+			gc.setTextAlign(TextAlignment.CENTER);
+			gc.setFont(new Font(20));
+			gc.fillText("Press ENTER to continue.", canvas.getWidth() / 2, canvas.getHeight() - 350);
+		}
+		
 	}
 
 	@Override
