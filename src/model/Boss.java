@@ -6,9 +6,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import controller.MainWindow;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Boss extends Thread{
@@ -43,6 +45,14 @@ public class Boss extends Thread{
 	public void paint() {
 		gc.drawImage(img, x, y);
 		
+		for(int i=150;i<(life*30)+150;i+=30) {
+			gc.setFill(Color.DARKRED);
+			gc.fillRect(i, 20, 30, 30);
+		}
+		
+		gc.setStroke(Color.YELLOW);
+		gc.strokeRect(150, 20, 300, 30);
+		
 		ArrayList<Bullet> toDel=new ArrayList<>();
 		if(!bllts.isEmpty()) {
 			for(Bullet b:bllts) {
@@ -59,7 +69,35 @@ public class Boss extends Thread{
 	}
 	
 	public void shot() {
-		bllts.add(new Bullet(x+(img.getWidth()/2),y+(img.getHeight()),false,canvas));
+		int sht;
+		Random rnd=new Random();
+		sht = rnd.nextInt(105 + 1) + 1;
+		if(sht >= 1 && sht <= 20) {
+			bllts.add(new Bullet(x+(img.getWidth()/2),y+(img.getHeight()),false,canvas));
+		}
+		if (sht >= 21 && sht <= 40) {
+			bllts.add(new Bullet(x+16,y+(img.getHeight()),false,canvas));
+		}
+		if (sht >= 41 && sht <= 60) {
+			bllts.add(new Bullet(x+(img.getWidth()),y+(img.getHeight()),false,canvas));
+		}
+		if (sht >= 61 && sht <= 75) {
+			bllts.add(new Bullet(x+(img.getWidth()/2),y+(img.getHeight()),false,canvas));
+			bllts.add(new Bullet(x+16,y+(img.getHeight()),false,canvas));
+		}
+		if (sht >= 76 && sht <= 80) {
+			bllts.add(new Bullet(x+(img.getWidth()/2),y+(img.getHeight()),false,canvas));
+			bllts.add(new Bullet(x+(img.getWidth()),y+(img.getHeight()),false,canvas));
+		}
+		if (sht >= 81 && sht <= 95) {
+			bllts.add(new Bullet(x+16,y+(img.getHeight()),false,canvas));
+			bllts.add(new Bullet(x+(img.getWidth()),y+(img.getHeight()),false,canvas));
+		}
+		if (sht >= 96 && sht <= 105) {
+			bllts.add(new Bullet(x+(img.getWidth()/2),y+(img.getHeight()),false,canvas));
+			bllts.add(new Bullet(x+16,y+(img.getHeight()),false,canvas));
+			bllts.add(new Bullet(x+(img.getWidth()),y+(img.getHeight()),false,canvas));
+		}
 	}
 	
 	public Rectangle getRectangle() {
@@ -71,36 +109,34 @@ public class Boss extends Thread{
 		Random rnd=new Random();
 		pause(500);
 		int sht=0;
-		while(life >= 0) {
-			sht=rnd.nextInt(200 + 1) + 1;
-			for(int i=0;i<10;i++) {
-				x+=speed;
+		boolean left = true;
+		while(life > 0) {
+			while(left) {
+				sht = rnd.nextInt(75 + 1) + 1;
+				for (int i = 0; i < 5; i++) {
+					x -= speed;
+				}
+				if (sht >= 1 && sht <= 50) {
+					shot();
+				}
+				pause(500);
+				if(x <= 0) {
+					left = false;
+				}
 			}
-			if(sht>=1 && sht<=49) {
-				shot();
+			while(!left) {
+				sht = rnd.nextInt(75 + 1) + 1;
+				for (int i = 0; i < 5; i++) {
+					x += speed;
+				}
+				if (sht >= 1 && sht <= 50) {
+					shot();
+				}
+				pause(500);
+				if(x == canvas.getWidth()-img.getWidth()) {
+					left = true;
+				}
 			}
-			pause(500);
-			for(int i=0;i<10;i++) {
-				y+=speed;
-			}
-			if(sht>=50 && sht<=99) {
-				shot();
-			}
-			pause(500);
-			for(int i=0;i<10;i++) {
-				x-=speed;
-			}
-			if(sht>=100 && sht<=149) {
-				shot();
-			}
-			pause(500);
-			for(int i=0;i<10;i++) {
-				y+=speed;
-			}
-			if(sht>150 && sht<=200) {
-				shot();
-			}
-			pause(500);
 		}
 	}
 	

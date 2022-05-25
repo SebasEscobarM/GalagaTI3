@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import controller.MainWindow;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -31,6 +32,10 @@ public class GameScreen extends BaseScreen{
 	private int enemy = 0;
 	
 	private Image img2;
+	
+	private int initLife = 10;
+	
+	private ProgressBar lifeBoss;
 	
 	public GameScreen(Canvas canvas) {
 		super(canvas);
@@ -69,7 +74,7 @@ public class GameScreen extends BaseScreen{
 			}
 		}else {
 			x=0;
-			boss.add(new Boss(canvas, x+160, y));
+			boss.add(new Boss(canvas, x+160, y+10));
 		}
 		
 		if(MainWindow.levelActual == 3) {
@@ -107,8 +112,10 @@ public class GameScreen extends BaseScreen{
 		}else if(MainWindow.levelActual == 3) {
 			if(finish == true) {
 				MainWindow.actScreen=2;
+				MainWindow.levelActual=1;
 			}else {
 				MainWindow.actScreen=2;
+				MainWindow.levelActual=1;
 			}
 		}
 	}
@@ -139,8 +146,6 @@ public class GameScreen extends BaseScreen{
 						MainWindow.score += 200;
 					}else if(MainWindow.levelActual == 2) {
 						MainWindow.score += 240;
-					}else if(MainWindow.levelActual == 3) {
-						MainWindow.score += 500;
 					}
 				}
 			}
@@ -183,10 +188,11 @@ public class GameScreen extends BaseScreen{
 				if(b.getRectangle().getBoundsInLocal().intersects(bo.getRectangle().getBoundsInLocal())) {
 					if(bo.getLife() != 0){
 						bo.setLife(bo.getLife()-1);
-					}else {
-						bossToDel.add(bo);
-						if (MainWindow.levelActual == 3) {
-							MainWindow.score += 500;
+						if(bo.getLife() == 0) {
+							bossToDel.add(bo);
+							if (MainWindow.levelActual == 3) {
+								MainWindow.score += 500;
+							}
 						}
 					}
 					bToDel.add(b);
@@ -219,8 +225,9 @@ public class GameScreen extends BaseScreen{
 			}
 		}
 		
+		
+		
 		gc.setFill(Color.WHITE);
-		//gc.setTextAlign(TextAlignment.LEFT);
 		gc.setFont(new Font(22));
 		gc.fillText("SCORE: "+MainWindow.score, 70, 700);
 		
