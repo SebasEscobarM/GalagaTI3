@@ -50,7 +50,8 @@ public class GameScreen extends BaseScreen{
 	public void play() {
 		if(MainWindow.levelActual == 1) {
 			enemy = 4;
-		}else if(MainWindow.levelActual == 2) {
+		}
+		if(MainWindow.levelActual == 2) {
 			enemy = 6;
 		}
 		avatar.stop();
@@ -68,7 +69,7 @@ public class GameScreen extends BaseScreen{
 			}
 		}else {
 			x=0;
-			enemies.add(new Enemy(canvas, x+160, y));
+			boss.add(new Boss(canvas, x+160, y));
 		}
 		
 		if(MainWindow.levelActual == 3) {
@@ -86,6 +87,7 @@ public class GameScreen extends BaseScreen{
 		avatar.getBllts().clear();
 		avatar.stop();
 		enemies.clear();
+		boss.clear();
 		if(MainWindow.levelActual == 1) {
 			if(finish == true) {
 				MainWindow.actScreen = 2;
@@ -108,7 +110,6 @@ public class GameScreen extends BaseScreen{
 			}else {
 				MainWindow.actScreen=2;
 			}
-			
 		}
 	}
 
@@ -147,7 +148,7 @@ public class GameScreen extends BaseScreen{
 		avatar.getBllts().removeAll(bToDel);
 		enemies.removeAll(eToDel);
 
-		if (enemies.size() == 0) {
+		if (enemies.size() == 0 && boss.size() == 0) {
 			ScoreScreen.gameOver = true;
 			stopGame(false);
 		}
@@ -169,6 +170,49 @@ public class GameScreen extends BaseScreen{
 		
 		for(Enemy e:enemies) {
 			if(e.getRectangle().getBoundsInLocal().intersects(avatar.getRectangle().getBoundsInLocal())) {
+				ScoreScreen.gameOver = false;
+				stopGame(true);
+				break;
+			}
+		}
+		
+		bToDel.clear();
+		ArrayList<Boss> bossToDel=new ArrayList<>();
+		for(Bullet b: avatar.getBllts()) {
+			for(Boss bo:boss) {
+				if(b.getRectangle().getBoundsInLocal().intersects(bo.getRectangle().getBoundsInLocal())) {
+					if(bo.getLife() != 0){
+						bo.setLife(bo.getLife()-1);
+					}else {
+						bossToDel.add(bo);
+						if (MainWindow.levelActual == 3) {
+							MainWindow.score += 500;
+						}
+					}
+					bToDel.add(b);
+				}
+			}
+		}
+		avatar.getBllts().removeAll(bToDel);
+		boss.removeAll(bossToDel);
+		
+		for(Boss bo:boss) {
+			ArrayList<Bullet> bsToDel=new ArrayList<>();
+			for(Bullet bs: bo.getBllts()) {
+				if(bs.getRectangle().getBoundsInLocal().intersects(avatar.getRectangle().getBoundsInLocal())) {
+					bsToDel.add(bs);
+				}
+			}
+			if(!bsToDel.isEmpty()) {
+				bo.getBllts().removeAll(bsToDel);
+				ScoreScreen.gameOver = false;
+				stopGame(true);
+				break;
+			}
+		}
+		
+		for(Boss bo:boss) {
+			if(bo.getRectangle().getBoundsInLocal().intersects(avatar.getRectangle().getBoundsInLocal())) {
 				ScoreScreen.gameOver = false;
 				stopGame(true);
 				break;

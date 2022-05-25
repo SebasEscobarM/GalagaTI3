@@ -18,7 +18,7 @@ public class Boss extends Thread{
 	private double y=70;
 	private Image img;
 	private double speed=2;
-	private boolean life=true;
+	private int life=10;
 	private ArrayList<Bullet> bllts;
 
 	public Boss(Canvas canvas) {
@@ -63,15 +63,15 @@ public class Boss extends Thread{
 	}
 	
 	public Rectangle getRectangle() {
-		return new Rectangle(x,y,90,90);
+		return new Rectangle(x,y,250,250);
 	}
 	
 	@Override
 	public void run() {
 		Random rnd=new Random();
-		pause(1000);
+		pause(500);
 		int sht=0;
-		while(life) {
+		while(life >= 0) {
 			sht=rnd.nextInt(200 + 1) + 1;
 			for(int i=0;i<10;i++) {
 				x+=speed;
@@ -108,11 +108,11 @@ public class Boss extends Thread{
 		return bllts;
 	}
 	
-	public void setLife(boolean life) {
+	public void setLife(int life) {
 		this.life=life;
 	}
 	
-	public boolean isLife() {
+	public int getLife() {
 		return life;
 	}
 

@@ -39,15 +39,6 @@ public class Enemy extends Thread{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		if(MainWindow.levelActual == 3) {
-			File file2=new File("src/images/finalBoss.png");
-			try {
-				img=new Image(new FileInputStream(file2));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public void resetPrmtrs() {
