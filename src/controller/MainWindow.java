@@ -25,7 +25,8 @@ public class MainWindow implements Initializable{
     @FXML
     private Canvas canvas;
     
-    private GraphicsContext gc;
+    @SuppressWarnings("unused")
+	private GraphicsContext gc;
     
     public static ArrayList<BaseScreen> screens;
     

@@ -18,6 +18,7 @@ public class ScoreScreen extends BaseScreen{
 	
 	public static boolean gameOver = false;
 	
+	@SuppressWarnings("unused")
 	private Image img2;
 	
 	private Image imgGameOver;
@@ -111,7 +112,7 @@ public class ScoreScreen extends BaseScreen{
 	}
 
 	public void setGameOver(boolean gameOver) {
-		this.gameOver = gameOver;
+		ScoreScreen.gameOver = gameOver;
 	}
 	
 	

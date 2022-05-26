@@ -7,15 +7,12 @@ import java.util.ArrayList;
 
 import controller.MainWindow;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
-import main.Main;
 import model.Avatar;
 import model.Boss;
 import model.Bullet;
@@ -32,10 +29,6 @@ public class GameScreen extends BaseScreen{
 	private int enemy = 0;
 	
 	private Image img2;
-	
-	private int initLife = 10;
-	
-	private ProgressBar lifeBoss;
 	
 	public GameScreen(Canvas canvas) {
 		super(canvas);
